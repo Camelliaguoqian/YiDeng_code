@@ -1,8 +1,69 @@
 《8-6 你不知道的HTML》 课程作业记录
 
+一、image用法
+1、计算网速
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>image 判断网速</title>
+    <style type="text/css">
+        .test{
+            float : right;
+            background : url(javascript:alert(111));
+        }
+    </style>
+</head>	
+<body>
+<img class="test" crossorign="anonymous" src="images/23.png" />
+
+<script>
+    var time_1 = Date().now();
+    var image = new Image();
+    image.crossorign = anonymous ;
+    image.src = "http://images/23.png"; //较小的图片,1*1 png 3kb
+    image.onload = function(){
+        var time_2 = Date().now() ;
+        var speed_d = 4/ time_2 - time_1 ; // 1-1000 : 2G 3G 4G WIFI
+
+    }
+
+</script>
+
+</body>
+</html>
+2、系统性能监控平台、系统bug监控、前端上报数据（打点）
 
 
+二、CSS远程攻击漏洞
+XSS 注入攻击漏洞
+css中，支持url属性的存在跨域风险
 
+background:url();
+test::after{
+    content:url();
+}
+color:expression();
+
+
+三、利用iframe本地localStorage的扩容
+还未练习完~~~
+
+
+四、语义化的重要性
+【http://www.cnblogs.com/freeyiyi1993/p/3615179.html】
+【https://juejin.im/entry/5ab5f229518825558a069304】
+
+1、html5新标签：<nav> <article> <header> <footer> <section>
+tips:html5.js
+
+
+优化：
+1、尽可能少的DOM
+2、::before ::after box-shadow...
+3、jstopng 代码压缩进图片
 
 
 
