@@ -11,11 +11,61 @@ BFC IFC GFC FFC
 1、html5 symbol
 2、iconfont矢量图标库 ---可引用symbol实现彩色字体
 3、cssicon
-4、border-radius
+4、border-radius  --【https://www.w3cplus.com/css3/css-secrets/flexible-ellipses.html】
 5、css绘制小猪佩奇
+6、渐变--【https://www.w3cplus.com/css3/new-css3-linear-gradient.html】
+
+7、颜色 --【https://www.w3cschool.cn/cssref/css-colorsfull.html】
 
 
+作业：css渐变实现彩虹伞的效果
 
+
+html:
+<!DOCTYPE html>
+<html>
+<head>
+	<title>2018-8-11 css3核心高级技巧</title>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+
+<div class="umbrella">
+    <div class="umbrella-skeleton"></div>
+    <div class="umbrella-stick"></div>
+</div>
+
+</body>
+</html>
+
+css:
+.umbrella{
+    position: relative;
+    width: 230px; 
+    top: 20px;
+}
+.umbrella-skeleton{
+    position: absolute;
+    top: 20px;
+    left: 0;
+    border-radius: 50% / 100% 100% 0 0;
+    /*background: #FFC0CB; */
+    padding: 20px; 
+    width: 200px; 
+    height: 150px;
+    z-index: 100;
+    background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+}
+.umbrella-stick{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: 3px;
+    width: 6px;
+    height: 340px;
+    border-radius: 10px 10px;
+    background: #D2691E; 
+}
 
 
 
