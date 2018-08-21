@@ -1,11 +1,53 @@
-【转】
+【转】【深入浅出jQuery】源码浅析--整体架构
 【https://www.cnblogs.com/coco1s/p/5261646.html】
 【https://www.cnblogs.com/yuqingfamily/p/5785593.html】
 
 
 优点：结构明晰，高内聚、低耦合，兼具优秀的性能与便利的扩展性，在浏览器的兼容性（功能缺陷、渐进增强）优雅的处理能力以及 Ajax 等方面周到而强大的定制功能
 
+·jQuery 闭包结构
 
+
+·jQuery 无 new 构造
+
+
+·jQuery 方法的重载
+
+
+·jQuery.fn.extend 与 jQuery.extend
+
+
+·jQuery 的链式调用及回溯
+
+
+·jQuery 正则与细节优化
+
+
+·jQuery 变量冲突处理
+
+
+
+
+==================================================================================
+【深入浅出jQuery】源码浅析2--奇技淫巧
+【http://www.cnblogs.com/coco1s/p/5303041.html】
+
+·短路表达式 与 多重短路表达式
+
+
+·预定义常用方法的入口
+
+
+·钩子机制（hook）
+
+
+·连贯接口
+
+
+·无 new 构造
+
+
+·setTimeout in Jquery
 
 
 
