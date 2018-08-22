@@ -2,29 +2,83 @@
 【https://www.cnblogs.com/coco1s/p/5261646.html】
 【https://www.cnblogs.com/yuqingfamily/p/5785593.html】
 
-
 优点：结构明晰，高内聚、低耦合，兼具优秀的性能与便利的扩展性，在浏览器的兼容性（功能缺陷、渐进增强）优雅的处理能力以及 Ajax 等方面周到而强大的定制功能
-
+==========================================================================
+jQuery整体架构
+|
+——变量、常用正则初始化
+——工具方法$.fn
+——$.ready()
+——复杂选择器 Sizzle
+——回调对象：对函数的统一管理$.Callback()
+——延迟对象：对异步的统一管理$.Deferred()
+——浏览器功能性检测$.support
+——数据存储$.data
+——队列方法：执行顺序的管理queue() | dequeue()
+——对元素属性的操作attr()、prop()、val()、addClass()、、、
+——时间操作的相关方法on()、trigger()
+——DOM操作
+——样式操作css()
+——Ajax()
+——动画animate()
+——位置和尺寸offset()
+——模块化
+——window.jQuery = window.$ = jQuery;
+========================================================================
 ·jQuery 闭包结构
-
+// 用一个函数域包起来，就是所谓的沙箱
+// 在这里边 var 定义的变量，属于这个函数域内的局部变量，避免污染全局
+// 把当前沙箱需要的外部变量通过函数参数引入进来
+// 只要保证参数对内提供的接口的一致性，你还可以随意替换传进来的这个参数
+(function(window, undefined) {
+   // jQuery 代码
+})(window);
 
 ·jQuery 无 new 构造
+1）首先要明确，使用 $('xxx') 这种实例化方式，其内部调用的是 return new jQuery.fn.init(selector, context, rootjQuery) 这一句话，也就是构造实例是交给了 jQuery.fn.init() 方法去完成。
 
+2）将 jQuery.fn.init 的 prototype 属性设置为 jQuery.fn，那么使用 new jQuery.fn.init() 生成的对象的原型对象就是 jQuery.fn ，所以挂载到 jQuery.fn 上面的函数就相当于挂载到 jQuery.fn.init() 生成的 jQuery 对象上，所有使用 new jQuery.fn.init() 生成的对象也能够访问到 jQuery.fn 上的所有原型方法。
+
+3）也就是实例化方法存在这么一个关系链  
+
+jQuery.fn.init.prototype = jQuery.fn = jQuery.prototype ;
+new jQuery.fn.init() 相当于 new jQuery() ;
+jQuery() 返回的是 new jQuery.fn.init()，而 var obj = new jQuery()，所以这 2 者是相当的，所以我们可以无 new 实例化 jQuery 对象。
 
 ·jQuery 方法的重载
-
+结合API学习...
 
 ·jQuery.fn.extend 与 jQuery.extend
+1) jQuery.extend(Object) 为扩展jQuery类本身，为类添加新的静态方法；
+2) jQuery.fn.extend(Object) 给jQuery对象添加实例方法，也就是通过这个
+extend添加新方法，实例化的jQuery对象都能使用，因为是挂载在jQuery.fn上的方法。
 
+也就是说：
+使用jQuery.extend(Object) 拓展的静态方法，可以直接使用$.xxx进行调用（xxx是拓展的方法名），
+而使用jQuery.fn.extend() 拓展的实例方法，需要使用 $().xxx 调用。
+
+
+ jQuery.extend = jQuery.fn.extend = function() {} ，也就是 jQuery.extend 的实现和 jQuery.fn.extend 的实现共用了同一个方法，但是为什么能够实现不同的功能了，这就要归功于 Javascript 强大（怪异？）的 this 了。
+
+1）在 jQuery.extend() 中，this 的指向是 jQuery 对象(或者说是 jQuery 类)，所以这里扩展在 jQuery 上；
+
+2）在 jQuery.fn.extend() 中，this 的指向是 fn 对象，前面有提到 jQuery.fn = jQuery.prototype ，也就是这里增加的是原型方法，也就是对象方法。
 
 ·jQuery 的链式调用及回溯
-
+只需要在要实现链式调用的方法的返回结果里，返回 this ，就能够实现链式调用了。
+// 通过 end() 方法终止在当前链的最新过滤操作，返回上一个对象集合
+$('div').eq(0).show().end().eq(1).hide();
 
 ·jQuery 正则与细节优化
-
+1）了解并尝试使用 Javascript 正则相关 API，包括了 test() 、replace() 、match() 、exec() 的用法；
+2）区分上面 4 个方法，哪个是 RegExp 对象方法，哪个是 String 对象方法；
+3）了解
+·零宽断言【用于查找在某些内容(但并不包括这些内容)之前或之后的东西，也就是说它们像\b,^,$那样用于指定一个位置，这个位置应该满足一定的条件(即断言)，因此它们也被称为零宽断言。最好还是拿例子来说明吧： 断言用来声明一个应该为真的事实。正则表达式中只有当断言为真时才会继续进行匹配。】，
+·匹配但是不捕获  ：不捕获就是在分组的前边加上?:，可以在不需要捕获分组的表达式中使用，加快表达式执行速度。
+·匹配并且捕获 ： 
 
 ·jQuery 变量冲突处理
-
+通过一开始保存全局变量的 window.jQuery 以及 windw.$ 。当需要处理冲突的时候，调用静态方法 noConflict()，让出变量的控制权，
 
 
 
@@ -33,13 +87,22 @@
 【http://www.cnblogs.com/coco1s/p/5303041.html】
 
 ·短路表达式 与 多重短路表达式
+短路表达式：作为"&&"和"||"操作符的操作数表达式，这些表达式在进行求值时，只要最终的结果已经可以确定是真或假，求值过程便告终止，这称之为短路求值。这是这两个操作符的一个重要属性。
 
+值得注意的点：
+1、在 Javascript 的逻辑运算中，0、""、null、false、undefined、NaN 都会判定为 false ，而其他都为 true ；
+2、因为 Javascript 的内置弱类型域 (weak-typing domain)，所以对严格的输入验证这一点不太在意，即便使用 && 或者 || 运算符的运算数不是布尔值，仍然可以将它看作布尔运算。虽然如此，还是建议如下：
+if(foo){ ... }     //不够严谨
+if(!!foo){ ... }   //更为严谨，!!可将其他类型的值转换为boolean类型
+注重细节，JavaScript 既不弱也不低等，我们只是需要更努力一点工作以使我们的代码变得真正健壮。
 
 ·预定义常用方法的入口
 
 
 ·钩子机制（hook）
+钩子是编程惯用的一种手法，用来解决一种或多种特殊情况的处理。
 
+简单来说，钩子就是适配器原理，或者说是表驱动原理，我们预先定义了一些钩子，在正常的代码逻辑中使用钩子去适配一些特殊的属性，样式或事件，这样可以让我们少写很多 else if 语句。
 
 ·连贯接口
 
