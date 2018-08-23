@@ -107,22 +107,9 @@ if(!!foo){ ... }   //更为严谨，!!可将其他类型的值转换为boolean�
 ·连贯接口
 
 
-·无 new 构造
-
-
 ·setTimeout in Jquery
-
-
-
-
-
-
-
-
-
-
-
-
+DOM Ready 事件：传Javascript原生的 window.onload 事件是在页面所有的资源都加载完毕后触发的。如果页面上有大图片等资源响应缓慢, 会导致 window.onload 事件迟迟无法触发，所以出现了DOM Ready 事件。此事件在 DOM 文档结构准备完毕后触发，即在资源加载前触发。
+另外我们需要在 DOM 准备完毕后，再修改DOM结构，比如添加DOM元素等。而为了完美实现 DOM Ready 事件，兼容各浏览器及低版本IE（针对高级的浏览器，可以使用 DOMContentLoaded 事件，省时省力），在 jQuery.ready() 方法里，运用了 setTimeout() 方法的一个特性， 在 setTimeout 中触发的函数, 一定是在 DOM 准备完毕后触发。
 
 
 
