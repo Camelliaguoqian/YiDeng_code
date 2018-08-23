@@ -1,0 +1,113 @@
+=====================================
+作业：
+1.rx.js Lodash.js API
+2.Underscore.js看源码
+3.梳理课程和PPT
+4.没有后端经验，必须看PHP MYSQL的录播
+=====================================
+
+-1------------------------------------
+【rx.js】
+官方API【https://cn.rx.js.org/manual/overview.html】
+推荐博客【https://segmentfault.com/a/1190000008464065#articleHeader7】
+
+=========================================================================================
+
+【Lodash.js】
+官方API【http://www.css88.com/doc/lodash/】
+与underscore 类似 ， 是1个js库，内部封装了诸多对字符串、数组、对象等常见数据类型的处理函数。
+模块组成
+Lodash 提供的辅助函数主要分为以下几类，函数列表和用法实例请查看 Lodash 的官方文档：
+
+Array，适用于数组类型，比如填充数据、查找元素、数组分片等操作
+Collection，适用于数组和对象类型，部分适用于字符串，比如分组、查找、过滤等操作
+Function，适用于函数类型，比如节流、延迟、缓存、设置钩子等操作
+Lang，普遍适用于各种类型，常用于执行类型判断和类型转换
+Math，适用于数值类型，常用于执行数学运算
+Number，适用于生成随机数，比较数值与数值区间的关系
+Object，适用于对象类型，常用于对象的创建、扩展、类型转换、检索、集合等操作
+Seq，常用于创建链式调用，提高执行性能（惰性计算）
+String，适用于字符串类型
+lodash/fp 模块提供了更接近函数式编程的开发方式，其内部的函数经过包装，具有 immutable、auto-curried、iteratee-first、data-last（官方介绍）等特点。Lodash 在 GitHub Wiki 中对 lodash/fp 的特点做了如下概述：
+
+Fixed Arity，固化参数个数，便于柯里化
+Rearragned Arguments，重新调整参数位置，便于函数之间的聚合
+Capped Iteratee Argument，封装 Iteratee 参数
+New Methods
+--------------------------------------
+
+
+-2------------------------------------
+Underscore.js
+官方API【http://www.bootcss.com/p/underscore/】
+推荐博客【https://www.cnblogs.com/fu-fu/p/7232745.html】、【https://www.cnblogs.com/zzsdream/p/6843864.html】
+
+·Underscore 是一个 JavaScript 工具库，它提供了一整套函数式编程的实用功能，但是没有扩展任何 JavaScript 内置对象。
+#源码解析 【转】【https://www.cnblogs.com/WhiteBlade/tag/underscore.js/】
+
+* 整体结构：
+首先underscore包裹在一个匿名自执行的函数当中
+内部定义了一个"_"变量
+将underscore中的相关方法添加到_原型中，创建的_对象就具备了underscore方法
+将Array.prototype中的相关方法添加到Underscore对象中, 这样Underscore对象也可以直接调用Array.prototype中的方法
+
+*underscore.js中部分封装函数
+（1）_.each
+_.each结构很清晰，如果是数组，就遍历数组调用相应的处理方法，如果是对象的话，就遍历对象调用相应的处理方法。
+其中判断是否为类数组的代码如下：
+1   var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+2   //获取"length"属性
+3   var getLength = property('length');
+4   //判断是否是类数组
+5   var isArrayLike = function(collection) {
+6     var length = getLength(collection);
+7     return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+8   };
+类数组，即拥有 length 属性并且 length 属性值为 Number 类型的元素，例如数组、arguments、HTMLCollection 以及 NodeList 等等,当然 {length: 3} 这种对象也满足条件，但是_.each一般不会传这种值。（这种判断类数组的方法还是可以学习借鉴一下的。）
+
+（2）optimizeCb 
+它是underscore内部用来执行函数的很重要的方法，并且改变所执行函数的作用域。
+（3） cb和_.iteratee
+（4）_.keys
+获取所有的属性名存在数组当中。
+这里的in操作符不仅在对象本身里查找，还会在原型链中查找。_.keys上增加了_.has()判断，将原型上的过滤。
+（5） _.allKeys
+keys和allKeys代码对比就少了if (_.has(obj, key))，allKeys是获取所有的，包括继承的
+（6）createAssigner 、 _.isMatch 、 _.matcher和_.matches
+
+（7）_.map/_.collect
+map和each的区别就是map是将最后的结果以数组的形式返回
+（8）createReduce 、 createPredicateIndexFinder 、 _.findIndex/_.findLastIndex 、 _.findKey 、 _.find / _.detect 、 _.filter/_.select 、_.negate 、 _.reject  、_.every/_.all  、 _.some 、 _.values 、_.sortedIndex 、createIndexFinder 、_.indexOf/_.lastIndexOf 、 _.contains/_.includes/_.include 、 _.invoke
+
+（9）_.pluck 、 _.where 、 _.findWhere 、 _.max 、 _.min 、 _.sample 、 _.shuffle 、 _.sortBy 、  group 、 _.groupBy 、 _.indexBy  、_.countBy  、 _.toArray 、 _.size  、  _.initial 、 _.first  、_.rest  、 _.last 、 flatten  、_.difference 、_.uniq 、  _.intersection 、 _.unzip 、 _.object 、 _.range 、_.chunk
+
+（10）baseCreate 、_.bind  、executeBound  、 _.partial  、  _.bindAll  、 _.memoize  、  _.memoize 、_.defer  、 _.throttle  、  _.debounce 、 _.wrap  、_.compose   、 _.after  、 _.before  、  _.once  、  _.mapObject 、 _.pairs  、 _.invert  、_.functions 、 _.pick 、 _.omit  、 _.create   、 _.clone 、 _.isMatch  、 eq  、deepEq  、_.isEmpty  、_.isElement  、 _.times 、 _.template  、   、   、   、
+
+
+--------------------------------------
+
+
+-3------------------------------------
+课件复习梳理：
+1. 函数是”第一等公民”
+2. 只用”表达式"，不用"语句"
+3. 没有”副作用"
+4. 不修改状态
+5. 引用透明（函数运行只靠参数）
+
+--------------------------------------
+
+
+
+-4------------------------------------
+看录播课的内容：
+·PHP
+·MYSQL
+
+--------------------------------------
+
+
+
+
+
+
