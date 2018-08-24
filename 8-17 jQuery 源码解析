@@ -112,6 +112,32 @@ DOM Ready 事件：传Javascript原生的 window.onload 事件是在页面所有
 另外我们需要在 DOM 准备完毕后，再修改DOM结构，比如添加DOM元素等。而为了完美实现 DOM Ready 事件，兼容各浏览器及低版本IE（针对高级的浏览器，可以使用 DOMContentLoaded 事件，省时省力），在 jQuery.ready() 方法里，运用了 setTimeout() 方法的一个特性， 在 setTimeout 中触发的函数, 一定是在 DOM 准备完毕后触发。
 
 
+========================================================================================================================================
+【Javascript中apply、call、bind】
+1、apply、call 
+在 javascript 中，call 和 apply 都是为了改变某个函数运行时的上下文（context）而存在的，换句话说，就是为了改变函数体内部 this 的指向。
+JavaScript 的一大特点是，函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。
+
+可以看出 call 和 apply 是为了动态改变 this 而出现的，当一个 object 没有某个方法（本栗子中banana没有say方法），但是其他的有（本栗子中apple有say方法），我们可以借助call或apply用其它对象的方法来操作。
+
+·区别
+（1）作用完全一样，只是接受参数的方式不太一样
+例如，有一个函数定义如下：
+var func = function(arg1, arg2) {   
+};
+就可以通过如下方式来调用：
+func.call(this, arg1, arg2);
+func.apply(this, [arg1, arg2])
+其中 this 是你想指定的上下文，他可以是任何一个 JavaScript 对象(JavaScript 中一切皆对象)，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。　　
+JavaScript 中，某个函数的参数数量是不固定的，因此要说适用条件的话，当你的参数是明确知道数量时用 call 。
+而不确定的时候用 apply，然后把参数 push 进数组传递进去。当参数数量不确定时，函数内部也可以通过 arguments 这个伪数组来遍历所有的参数。
+ 
+ 
+ 
+ 
+
+
+
 
 
 
