@@ -1,0 +1,88 @@
+8-30下午的试卷解析
+笔记如下：
+1、变量提升
+
+2、函数定义 在浏览器的发展阶段中，解析结果不一致
+yideng();
+var flag = true;
+if (flag) {
+function yideng() { console.log("yideng1");
+}
+} else {
+function yideng() {console.log("yideng2");
+}
+}
+正确解答：不同浏览器解释结果不一致。
+1）yideng2 (ie浏览器以及之前的老浏览器，函数提升，不管有没有if(){  }里的函数都会提到外层，所以，else{}里的函数生效)
+2）yideng1 （firefox）
+3）yideng() is not a function (google新浏览器)
+
+
+3、GC回收、内存泄漏
+------
+1.在js中定义的全局变量是不会被销毁的，因为我们随时都可能会用到这个变量，所以不能被销毁。
+　2.但是在函数中定于的变量就不一定了，而且由于在函数的定义的变量的生命周期在执行完这个函数就销毁的原因自然就保存不了上一次的值。
+　2.1但是并不是说函数就真的保存不了上一次的值，因为有的时候我们确实需要上一次的值，所以js判断是否需要保存上一次变量的值的时候就会遵守这样的一个规则。
+总结：
+　1、如果一个对象不被引用，那么这个对象就会被GC回收；
+　2、如果两个对象互相引用，但是没有被第3个对象所引用，那么这两个互相引用的对象也会被回收。
+------
+
+例子：
+function test(){
+var a = "yideng";
+return function(){
+eval(""); //情况1：不会被GC回收
+
+Try{  //情况2：不会被GC回收
+
+}catch(e){
+
+}
+  
+}
+}
+test()();
+变量a会被GC回收吗？
+解析：不会。因为eval(“”);不知道a会不会被引用，所以不会被GC回收。
+可以改成window.eval(“”);可以回收
+
+//情况3：不会被GC回收，造成内存泄漏
+function test(){
+var a = [];
+return function(){
+A[100000] = “”;   //会造成内存泄漏-情况3
+} 
+test()();
+
+
+4、原型链
+示例：
+Object.prototype.a = ‘a';
+Function.prototype.a = 'a1';
+function Person(){};
+var yideng = new Person();
+console.log('p.a: '+ yideng.a);
+console.log(1..a);
+console.log(1.a);
+
+正确解答：
+p.a: a
+a
+报错：Invalid or unexpected token
+
+----解析：
+Javascript JIT ----js运行时编译优化等（java虚拟机）
+//万物皆对象
+//神图 原型链【函数（Function）才有prototype属性，对象（除Object）拥有__proto__ 】【https://www.cnblogs.com/libin-1/p/5820550.html】
+//1、每一个实例身上yideng.__ptoto__ = Person.prototype;
+//2、Person.prototype.constructor =  Person;
+//3、Person.__ptoto__ = Object.prototype;
+//4、Object.__ptoto__ = null;
+
+
+
+
+
+
+
