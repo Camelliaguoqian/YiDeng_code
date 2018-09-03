@@ -9,10 +9,49 @@
 4、将编译后的文件挂载为jQuery的组件。
 
 5、实现Karma完成对点赞+1组件的单元测试。
-
-
-
 ==========================================================================
+
+
+&作业要点：
+1、ES6类 构造函数
+
+2、babel安装和使用
+1）npm 安装
+2）新建Babel的配置文件.babelrc，存放在项目的根目录下。
+该文件用来设置转码规则和插件，基本格式如下。
+{
+  "presets": [],
+  "plugins": []
+}
+3）将babel-cli安装在项目之中，
+改写package.json。
+{
+  // ...
+  "devDependencies": {
+    "babel-cli": "^6.0.0"
+  },
+  "scripts": {
+    "build": "babel ./scripts/index.es6 --out-file ./scripts/index.js",
+    "build-thumb": "babel ./scripts/thumb.es6 --out-file ./scripts/thumb.js"
+  },
+}
+4）转码的时候，就执行下面的命令。
+$ npm run build
+
+3、System.js
+【https://www.cnblogs.com/shuoer/p/7779131.html】
+
+
+
+
+
+
+
+
+
+
+=========================================================================================================
+
 
 
 ###课堂笔记
